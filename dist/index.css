@@ -1,0 +1,28 @@
+html {
+  background-color: black;
+}
+h1 {
+  font-style: italic;
+  color: azure;
+}
+textarea {
+  text-align: center;
+  align-items: center;
+  color: blueviolet;
+  font-size: large;
+  font-weight: bold;
+}
+body > * {
+  margin-top: 180px;
+  color: aliceblue;
+  font-size: 100px;
+}
+#btn {
+  font-size: 50px;
+  width: 300px;
+  height: 150px;
+  border-radius: 10px;
+}
+#btn:hover {
+  background-color: red;
+}

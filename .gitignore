@@ -1,0 +1,2 @@
+*.png
+/terraform/.terraform/

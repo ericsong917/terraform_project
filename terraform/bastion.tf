@@ -9,4 +9,11 @@ resource "aws_instance" "eric-bastion1" {
         Name = "eric-bastion1"
     }
 }
-
+resource "aws_eip" "bastion-eip" {
+  instance = aws_instance.eric-bastion1.id
+  vpc      = true
+}
+resource "aws_eip_association" "bastion-eip-association" {
+  instance_id   = aws_instance.eric-bastion1.id
+  allocation_id = aws_eip.bastion-eip.id
+}

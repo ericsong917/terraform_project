@@ -47,3 +47,42 @@ resource "aws_security_group" "eric-rds-sg"{
     }
 }
 
+resource "aws_security_group" "eric-jenkins-sg"{
+    name ="eric-jenkins-sg"
+    vpc_id = aws_vpc.eric-vpc.id
+    ingress{
+        from_port=22
+        to_port=22
+        protocol="tcp"
+        security_groups = [aws_security_group.eric-bastion-sg.id]
+    }
+    ingress{
+        from_port=9090
+        to_port=9090
+        protocol="tcp"
+        security_groups = [aws_security_group.eric-lb2-sg.id]
+    }
+    egress{
+        from_port =0
+        to_port=65535
+        protocol="tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+}
+
+resource "aws_security_group" "eric-lb2-sg"{
+    name="eric-lb2-sg"
+    vpc_id = aws_vpc.eric-vpc.id
+    ingress{
+        from_port =0
+        to_port=65535
+        protocol="tcp"
+        cidr_blocks = ["27.122.140.10/32"]
+    }
+    egress{
+        from_port =0
+        to_port=65535
+        protocol="tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+}

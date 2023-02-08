@@ -5,18 +5,7 @@ import boto3
 import json
 import ast
 import os
-def check_ip(IP_ADDRESS, IP_RANGE):
-    VALID_IP = False
-    cidr_blocks = list(filter(lambda element: "/" in element, IP_RANGE))
-    if cidr_blocks :
-        for cidr in cidr_blocks:
-            net = ip_network(cidr)
-            VALID_IP = ip_address(IP_ADDRESS) in net
-            if VALID_IP:
-                break
-    if not VALID_IP and IP_ADDRESS in IP_RANGE:
-        VALID_IP = True
-    return VALID_IP
+
 DB_HOST = os.getenv('DB_HOST')
 DB_NAME = os.getenv('DB_NAME')
 DB_PASSWORD=os.getenv('DB_PASSWORD')
@@ -30,12 +19,7 @@ connection = pymysql.connect(
     port = DB_PORT,
     ) # db 접근 하기 위한 정보 
 def lambda_handler(event, context):
-    IP_ADDRESS = event["requestContext"]["http"]["sourceIp"]
-    IP_RANGE = ast.literal_eval(os.environ.get("IP_RANGE", "[]"))
-    VALID_IP = check_ip(IP_ADDRESS, IP_RANGE)
-    if not VALID_IP:
-        return ("Unauthrozied")
-    eng_name=event["queryStringParameters"]['eng_name']
+    eng_name=event["queryStringParameters"]["eng_name"]
     query =  "select korean_name from cds_people where english_name="+"'"+eng_name+"';"
     cursor = connection.cursor()
     cursor.execute(query)
@@ -45,5 +29,9 @@ def lambda_handler(event, context):
         return(res)
     cursor.close()
     res=rows[0][0]
-    res_json={"eng_name":str(res)}
-    return (res_json)
+    res={"eng_name":res}
+    return({
+        'statusCode':200,
+        'body':json.dumps(res,ensure_ascii=False)
+    })
+ 

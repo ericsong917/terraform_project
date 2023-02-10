@@ -12,6 +12,7 @@ pipeline {
             steps{
                 echo 'terraform apply'
                 sh('cd terraform')
+                sh('terraform init')
                 sh('terraform apply -auto-approve')
             }
         }

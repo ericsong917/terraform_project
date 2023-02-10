@@ -11,6 +11,7 @@ pipeline {
         stage('terraformapply'){
             steps{
                 dir('/var/lib/jenkins/workspace/sprint2/terraform') { // <<------------
+                    sh 'terraform init'
                     sh 'terraform apply -auto-approve'
                 }
 

@@ -9,16 +9,6 @@ resource "aws_lb" "eric-jenkins-lb" {
     Environment = "eric-jenkins-lb"
   }
 }
- 
-# resource "aws_lb_listener" "lb_listener2"{
-#     load_balancer_arn = aws_lb.eric-jenkins-lb.arn
-#     port ="80"
-#     protocol = "HTTP"
-#     default_action{
-#         type = "forward"
-#         target_group_arn = aws_lb_target_group.eric-jenkins-tg.id
-#     }
-# }
 resource "aws_lb_target_group" "eric-jenkins-tg" {
   name     = "eric-jenkins-tg"
   port     = 80
@@ -27,8 +17,29 @@ resource "aws_lb_target_group" "eric-jenkins-tg" {
 }
  
 resource "aws_lb_target_group_attachment" "lb_attach1" {
-  target_group_arn = "arn:aws:elasticloadbalancing:ap-northeast-2:151564769076:targetgroup/eric-jenkins-tg/ee331e9b59919e2b"
+  target_group_arn = aws_lb_target_group.eric-jenkins-tg.arn
   target_id = aws_instance.eric-jenkins.id
   port     = 9090
    
+}
+
+resource "aws_lb" "eric-lambda-lb"{
+    name="eric-lambda-lb"
+    
+    
+}
+
+resource "aws_lb_target_group" "eric-lambda-tg"{
+    name="eric-lambda-tg"
+    target_type="lambda"
+    ip_address_type = "ipv4"
+    proxy_protocol_v2                  = false
+    slow_start                         = 0
+    tags                               = {}
+}
+
+resource "aws_lb_target_group_attachment" "lb_attach2"{ 
+  target_group_arn = aws_lb_target_group.eric-lambda-tg.arn
+  target_id = aws_lambda_function.lambda.arn
+
 }

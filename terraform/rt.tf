@@ -14,7 +14,8 @@ resource "aws_route_table" "privatert"{
     vpc_id = aws_vpc.eric-vpc.id
     route{
         cidr_block="0.0.0.0/0"
-        gateway_id=aws_nat_gateway.nat.id
+        nat_gateway_id=aws_nat_gateway.nat.id
+
     }
 }
 resource "aws_route_table_association" "private_routing1" {

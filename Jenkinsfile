@@ -11,8 +11,7 @@ pipeline {
         stage('terraformapply'){
             steps{
                 echo 'terraform apply'
-                sh('cd terraform')
-                sh('terraform init')
+                sh('cd /var/lib/jenkins/workspace/sprint2')
                 sh('terraform apply -auto-approve')
             }
         }

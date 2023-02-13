@@ -17,7 +17,7 @@ pipeline {
 =======
                 dir('/var/lib/jenkins/workspace/sprint2/terraform') { // <<------------
                     sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
+                    sh 'terraform apply -auto-approve' //test
                 }
 
 >>>>>>> 4236e87e294076b55721b74aa07317b7543c6989

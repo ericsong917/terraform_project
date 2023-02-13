@@ -10,9 +10,17 @@ pipeline {
         }
         stage('terraformapply'){
             steps{
+<<<<<<< HEAD
                 echo 'terraform apply'
                 sh('cd terraform')
                 sh('terraform apply -auto-approve')
+=======
+                dir('/var/lib/jenkins/workspace/sprint2/terraform') { // <<------------
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
+                }
+
+>>>>>>> 4236e87e294076b55721b74aa07317b7543c6989
             }
         }
     }

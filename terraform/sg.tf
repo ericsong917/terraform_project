@@ -74,10 +74,10 @@ resource "aws_security_group" "eric-lb2-sg"{
     name="eric-lb2-sg"
     vpc_id = aws_vpc.eric-vpc.id
     ingress{
-        from_port =0
-        to_port=65535
+        from_port =80
+        to_port=80
         protocol="tcp"
-        cidr_blocks = ["0.0.0.0/0"]
+        cidr_blocks = ["27.122.140.10/32","192.30.252.0/22","185.199.108.0/22","140.82.112.0/20","143.55.64.0/20"]
     }
     egress{
         from_port =0
@@ -85,4 +85,5 @@ resource "aws_security_group" "eric-lb2-sg"{
         protocol="tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+
 }

@@ -79,7 +79,7 @@ resource "aws_security_group" "eric-lb2-sg"{
         protocol="tcp"
         cidr_blocks = ["27.122.140.10/32","192.30.252.0/22","185.199.108.0/22","140.82.112.0/20","143.55.64.0/20"]
     }
-    egress{
+    egress{ //test
         from_port =0
         to_port=65535
         protocol="tcp"
